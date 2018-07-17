@@ -19,6 +19,10 @@ module.exports = {
       type: 'string',
       required: true,
     },
+    data: {
+      type: 'json',
+      required: false
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -32,7 +36,7 @@ module.exports = {
     appletsconfigs: {
       collection: 'appletsconfig',
       via: 'instanceconfig'
-    },
+    }
 
   },
 

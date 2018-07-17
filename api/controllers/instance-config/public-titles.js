@@ -13,15 +13,25 @@ module.exports = {
 
 
   exits: {
-
+    not_authorised_user: {
+      responseType:'unauthorised'
+    },
+    authorised_user: {
+      responseType:'ok'
+    },
   },
 
 
   fn: async function (inputs, exits) {
+
+    // can user access this action?
+
+
     const all = await InstanceConfig.find() 
     // Filter for public visibility
     const slugs = all.map(i => i.slug)
-    return exits.success(slugs);
+    // return exits.success(slugs);
+    return exits.authorised_user(slugs)
   }
 
 
