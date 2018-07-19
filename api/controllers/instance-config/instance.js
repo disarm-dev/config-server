@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Public titles',
+  friendlyName: 'List Instances for an authenticated user',
 
 
   description: 'List out just the titles or slugs for all publicly-visible InstanceConfigs',
