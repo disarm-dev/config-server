@@ -31,11 +31,6 @@ module.exports = {
       type:'string',
       required:false
     },
-    published_to: {
-      type: 'string',
-      isIn: ['production', 'staging', 'none'],
-      defaultsTo:'none'
-    },
     
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
@@ -47,11 +42,10 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    appletsconfigs: {
+    instanceconfigs: {
       collection: 'instanceconfig',
       via: 'instance'
     }
-
   },
 
 };
