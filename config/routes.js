@@ -28,6 +28,7 @@ module.exports.routes = {
 
   '/public-titles': 'instance-config.public-titles',
   '/config': 'instance-config.create-config',
+  'POST /auth/login':'auth.login',
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
