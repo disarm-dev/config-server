@@ -27,12 +27,12 @@ module.exports = {
     // can user access this action?
 
 
+
     const all = await InstanceConfig.find() 
     // Filter for public visibility
     const slugs = all.map(i => i.slug)
     // return exits.success(slugs);
     return exits.authorised_user(slugs)
   }
-
 
 };

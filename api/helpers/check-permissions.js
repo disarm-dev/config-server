@@ -29,6 +29,8 @@ module.exports = {
     .populate('adminUsers', { id: inputs.userId })
     .populate('regularUsers', { id: inputs.userId });
 
+    
+
     if (!org) { throw 'orgNotFound'; }
 
     var rights = [];
