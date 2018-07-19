@@ -1,5 +1,5 @@
 /**
- * InstanceConfig.js
+ * AppletsConfig.js
  *
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -14,29 +14,26 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
-    slug: {
+    
+    name: {
       type: 'string',
       required: true,
     },
-    title:{
+
+    instance_config_version:{
+      type: 'number',
+      autoIncrement: true
+    },
+
+    application_version:{
       type: 'string',
-      required: true
+      regex: /^(\d+\.)(\d+)$/
     },
-    location_name:{
-      type: 'string',
-      required: true
+
+    instance_configuration:{
+      type:'json',
+      required:true
     },
-    support_number:{
-      type:'string',
-      required:false
-    },
-    published_to: {
-      type: 'string',
-      isIn: ['production', 'staging', 'none'],
-      defaultsTo:'none'
-    },
-    
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -47,11 +44,9 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    appletsconfigs: {
-      collection: 'appletsconfig',
-      via: 'instanceconfig'
-    }
-
+    instance: {
+      model: 'instance',
+    },
   },
 
 };
