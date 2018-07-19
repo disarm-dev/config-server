@@ -19,10 +19,24 @@ module.exports = {
       type: 'string',
       required: true,
     },
-    data: {
-      type: 'json',
-      required: false
+    title:{
+      type: 'string',
+      required: true
     },
+    location_name:{
+      type: 'string',
+      required: true
+    },
+    support_number:{
+      type:'string',
+      required:false
+    },
+    published_to: {
+      type: 'string',
+      isIn: ['production', 'staging', 'none'],
+      defaultsTo:'none'
+    },
+    
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

@@ -17,7 +17,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': false,
+  '*': true,
   'instance-config': {
     'public-titles': 'hasAuthorizationHeader',
   },

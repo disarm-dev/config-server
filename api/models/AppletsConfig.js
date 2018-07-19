@@ -20,6 +20,21 @@ module.exports = {
       required: true,
     },
 
+    instance_config_version:{
+      type: 'number',
+      autoIncrement: true
+    },
+
+    application_version:{
+      type: 'string',
+      regex: /^(\d+\.)(\d+)$/
+    },
+
+    instance_configuration:{
+      type:'json',
+      required:true
+    },
+
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝

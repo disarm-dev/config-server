@@ -11,14 +11,12 @@ module.exports = function auth(sails) {
         'GET /*': function (req, res, next) {
           let user = req.user;
           let resource = req.path;
-
           if(can(user, 'View', resource)){
             sails.log.info('Geting from ',resource)
             return next();
           }else{
-            return ne
+            return 
           }
-          
         }
       }
     }
