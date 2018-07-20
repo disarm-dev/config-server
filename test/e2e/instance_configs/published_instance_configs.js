@@ -16,9 +16,33 @@ test.after(async () => {
 
 // TODO: Need test.afterEach hook where we clear data in DB
 
-test.serial('/instances/:id/published_instance_configs', async t => {
+test.serial('/instances/:id/published_instance_configs returns 401 when not logged in', async t => {
   const res = await supertest(sails.hooks.http.app)
     .get('/instances/:id/published_instance_configs')
 
+  t.is(res.status, 401)
+});
+
+test.serial('/instances/:id/published_instance_configs returns 200 when logged in', async t => {
+
+  const instance = await sails.models.instance.create({name: 'test_instance'}).fetch()
+
+  const instance_config_1 = await sails.models.instanceconfig.create({
+    name: 'why_does_it_need_a_name',
+    instance_configuration: {applets: {}},
+    instance: instance.id
+  }).fetch()
+
+  const instance_config_2 = await sails.models.instanceconfig.create({
+    name: 'why_does_it_need_a_name_2',
+    instance_configuration: { applets: {} },
+    instance: instance.id
+  }).fetch()
+
+  const res = await supertest(sails.hooks.http.app)
+    .get(`/instances/${instance.id}/published_instance_configs`)
+    .set('authorization', 'key')
+  
   t.is(res.status, 200)
+  t.deepEqual(res.body, [instance_config_1, instance_config_2])
 });
