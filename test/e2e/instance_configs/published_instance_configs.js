@@ -6,13 +6,15 @@ const { setup_sails, teardown_sails } = require('../../_helpers')
 
 // We can definitely do this in a smarter way. 
 // Ideally we fire up the server once and then just clear data between each test
-test.beforeEach(async () => {
+test.before(async () => {
   await setup_sails()
 })
 
-test.afterEach.always(async () => {
+test.after(async () => {
   await teardown_sails()
 })
+
+// TODO: Need test.afterEach hook where we clear data in DB
 
 test.serial('/instances/:id/published_instance_configs', async t => {
   const res = await supertest(sails.hooks.http.app)

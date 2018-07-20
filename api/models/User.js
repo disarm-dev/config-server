@@ -38,8 +38,11 @@ module.exports = {
       collection: 'instance',
       via: 'uid',
       through:'permission'
-    }
+    },
 
+    permissions: {
+      collection: 'permission',
+    }
   }
 
 };
