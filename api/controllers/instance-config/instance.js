@@ -23,15 +23,12 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-
     // can user access this action?
-
-
-
+    console.log('Instance Controller')
     const all = await InstanceConfig.find() 
     // Filter for public visibility
     const slugs = all.map(i => i.slug)
-    // return exits.success(slugs);
+    // return exits.succ ess(slugs);
     return exits.authorised_user(slugs)
   }
 
