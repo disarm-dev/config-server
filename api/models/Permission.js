@@ -29,8 +29,8 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    user: {
-      model: 'user',
+    uid: {
+      model: 'user'
     },
     instance:{
       model:'instance'

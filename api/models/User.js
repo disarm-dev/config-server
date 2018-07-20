@@ -34,12 +34,13 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    permissions: {
-      collection: 'permission',
-      via: 'user'
-    },
+    instances: {
+      collection: 'instance',
+      via: 'uid',
+      through:'permission'
+    }
 
-  },
+  }
 
 };
 
