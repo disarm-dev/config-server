@@ -11,7 +11,7 @@ export function setup_sails() {
       // For example, we might want to skip the Grunt hook,
       // and disable all logs except errors and warnings:
       hooks: { grunt: false },
-      log: { level: 'warn' },
+      log: { level: 'silent' },
 
     }, (err) => {
       if (err) {

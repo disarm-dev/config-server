@@ -14,10 +14,9 @@ test.afterEach.always(async () => {
   await teardown_sails()
 })
 
-// test runs serially as we don't want data to leak between tests
-test.serial('/users/:id/permissions', async t => {
+test.serial('/instances/:id/published_instance_configs', async t => {
   const res = await supertest(sails.hooks.http.app)
-    .get('/users/1/permissions')
+    .get('/instances/:id/published_instance_configs')
 
   t.is(res.status, 200)
 });

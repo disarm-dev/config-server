@@ -27,6 +27,7 @@ module.exports.routes = {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
   'GET /instances': 'instance-config.instance',
+  'GET /instances/:id/published_instance_configs': 'instance-config.published-configs',
   '/config': 'instance-config.create-config',
   'POST /auth/login':'auth.login',
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
