@@ -23,8 +23,7 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    let permissions = [];
-    return exits.authorised_user('permissions')
+    return exits.authorised_user(await User.find())
   }
 
 };
