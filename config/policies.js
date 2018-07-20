@@ -17,7 +17,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': true,
+  // '*': true,
   'instance-config': {
     'public-titles': 'hasAuthorizationHeader',
   },
@@ -26,6 +26,7 @@ module.exports.policies = {
     findOne: 'hasAuthorizationHeader',
     create: 'hasAuthorizationHeader'
   },
-  // thing: 'hasAuthorizationHeader',
-
+  'user': {
+    permissions: ['hasAuthorizationHeader', 'isLoggedIn']
+  }
 };
