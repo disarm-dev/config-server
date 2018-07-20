@@ -14,25 +14,10 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
-    slug: {
-      type: 'string',
-      required: true,
-    },
-    title:{
+    name:{
       type: 'string',
       required: true
     },
-    location_name:{
-      type: 'string',
-      required: true
-    },
-    support_number:{
-      type:'string',
-      required:false
-    },
-    
-
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
@@ -45,6 +30,11 @@ module.exports = {
     instanceconfigs: {
       collection: 'instanceconfig',
       via: 'instance'
+    },
+    users:{
+      collection:'user',
+      via:'instance',
+      through:'permission'
     }
   },
 
