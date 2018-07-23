@@ -35,9 +35,6 @@ module.exports.routes = {
   'GET /instances/:id/published_instance_configs': 'instance-config.find',
   'GET /instances/:id/published_instance_configs/:version': 'instance-config.findOne',
 
-  // 'GET /instances': 'instance-config.instance',
-  // '/config': 'instance-config.create-config',
-  // 'POST /auth/login':'auth.login',
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
