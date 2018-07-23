@@ -1,29 +1,22 @@
 module.exports = {
 
+  friendlyName: 'Find users',
 
-  friendlyName: 'Permissions Actions',
-
-
-  description: 'Returns the list of permissions that a user has',
-
+  description: 'Returns all users',
 
   inputs: {
 
   },
 
-
   exits: {
-    not_authorised_user: {
-      responseType:'unauthorised'
-    },
-    authorised_user: {
+    success: {
       responseType:'ok'
     },
   },
 
 
   fn: async function (inputs, exits) {
-    return exits.authorised_user(await User.find())
+    const users = await User.find()
+    return exits.success(users)
   }
-
 };

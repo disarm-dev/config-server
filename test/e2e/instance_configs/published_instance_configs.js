@@ -41,6 +41,7 @@ test.serial('/instances/:id/published_instance_configs returns 200 when logged i
 
   const res = await supertest(sails.hooks.http.app)
     .get(`/instances/${instance.id}/published_instance_configs`)
+    // TODO: replace key with an actual api_key
     .set('authorization', 'key')
   
   t.is(res.status, 200)

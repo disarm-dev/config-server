@@ -1,11 +1,8 @@
 module.exports = {
 
-
   friendlyName: 'Permissions Actions',
 
-
   description: 'Returns the list of permissions that a user has',
-
 
   inputs: {
     id: {
@@ -19,20 +16,14 @@ module.exports = {
     }
   },
 
-
   exits: {
-    not_authorised_user: {
-      responseType: 'unauthorised'
-    },
-    authorised_user: {
+    success: {
       responseType: 'ok'
     },
   },
 
-
   fn: async function (inputs, exits) {
     const user = await User.findOne({id: inputs.id}).populate('permissions')
-    return exits.authorised_user(user.permissions)
+    return exits.success(user.permissions)
   }
-
 };

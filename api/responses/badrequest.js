@@ -26,7 +26,7 @@
  * ```
  */
 
-module.exports = function unauthorised(optionalData) {
+module.exports = function badrequest(optionalData) {
 
   // Get access to `req` and `res`
   var req = this.req;

@@ -1,10 +1,8 @@
 module.exports = {
 
-  friendlyName: 'Login Action',
+  friendlyName: 'Create user',
 
-
-  description: 'Controller for user to log in',
-
+  description: 'Controller for creating a user',
 
   inputs: {
     username:{
@@ -17,22 +15,22 @@ module.exports = {
     }
   },
 
-
   exits: {
     signup_fail: {
-      responseType:'unauthorised'
+      responseType:'badrequest'
     },
     success: {
       responseType:'ok'
     },
   },
 
-
   fn: async function (inputs, exits) {
-    let {username, password} = inputs;
-    console.log(sails.helpers)
-    password = await sails.helpers.encryptPassword.with({password}).intercept('fail','signup_fail')
-    const user = await User.create({username,password})
+    const {username, password} = inputs;
+    
+    const encrypted_password = await sails.helpers.encryptPassword.with({password}).intercept('fail','signup_fail')
+    
+    await User.create({ username, password: encrypted_password})
+    
     return exits.success()
   }
 };

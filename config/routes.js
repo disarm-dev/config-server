@@ -25,13 +25,15 @@ module.exports.routes = {
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
+  'POST /users': 'user.create',
   'GET /users/:id/permissions': 'user.permissions',
+  'GET /users': 'user.find',
 
-
-  'GET /instances': 'instance-config.instance',
   'GET /instances/:id/published_instance_configs': 'instance-config.published-configs',
-  '/config': 'instance-config.create-config',
-  'POST /auth/login':'auth.login',
+
+  // 'GET /instances': 'instance-config.instance',
+  // '/config': 'instance-config.create-config',
+  // 'POST /auth/login':'auth.login',
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
