@@ -7,7 +7,11 @@ module.exports = {
 
 
   inputs: {
-
+    id: {
+      description: 'The id of the config to look up.',
+      type: 'number',
+      required: true
+    }
   },
 
 
@@ -22,8 +26,10 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    let public_instance_config = {}
-    return exits.authorised_user(public_instance_config)
+    // TODO: Ensure user has permissions to the instance_configs 
+    // TODO: should probably filter where {published: true}
+    const instanceConfigs = await InstanceConfig.find({instance: inputs.id})
+    return exits.authorised_user(instanceConfigs)
   }
 
 };

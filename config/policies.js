@@ -17,15 +17,17 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': true,
+  // '*': true,
   'instance-config': {
     'public-titles': 'hasAuthorizationHeader',
+    'published-configs': ['hasAuthorizationHeader', 'isLoggedIn']
   },
   InstanceConfig: {
     find: true,
     findOne: 'hasAuthorizationHeader',
     create: 'hasAuthorizationHeader'
   },
-  // thing: 'hasAuthorizationHeader',
-
+  'user': {
+    permissions: ['hasAuthorizationHeader', 'isLoggedIn']
+  }
 };
