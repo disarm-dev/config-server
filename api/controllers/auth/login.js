@@ -43,9 +43,7 @@ module.exports = {
       .helpers
       .verifyPassword
       .with({ password, encrypted_password: user.encrypted_password})
-      .intercept('fail', () => {
-        return exits.login_fail('Invalid username or password')
-      })
+      .intercept('fail', 'login_fail')
 
     const api_key = md5(user.username + user.encrypted_password)
     

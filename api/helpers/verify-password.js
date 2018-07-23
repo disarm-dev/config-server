@@ -22,6 +22,9 @@ module.exports = {
   },
 
   exits: {
+    success: {
+      outputExample: 'Correct Password'
+    },
     fail:{
       outputExample: 'Incorrect Password'
     }

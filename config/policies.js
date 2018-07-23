@@ -18,16 +18,15 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-  'instance-config': {
-    'public-titles': 'hasAuthorizationHeader',
-    'published-configs': ['hasAuthorizationHeader', 'isLoggedIn']
+  'auth': {
+    'login': true,
+    'logout': ['isLoggedIn']
   },
-  InstanceConfig: {
-    find: true,
-    findOne: 'hasAuthorizationHeader',
-    create: 'hasAuthorizationHeader'
+  'instance-config': {
+    'public-titles': ['isLoggedIn'],
+    'published-configs': ['isLoggedIn'],
   },
   'user': {
-    permissions: ['hasAuthorizationHeader', 'isLoggedIn']
+    'permissions': ['isLoggedIn'],
   }
 };

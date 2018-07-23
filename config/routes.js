@@ -26,6 +26,7 @@ module.exports.routes = {
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
   'POST /auth/login': 'auth.login',
+  'POST /auth/logout': 'auth.logout',
 
   'POST /users': 'user.create',
   'GET /users/:id/permissions': 'user.permissions',

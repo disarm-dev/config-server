@@ -37,7 +37,8 @@ test.serial('/users/:id/permissions returns users permissions when logged in', a
 
   const user = await sails.models.user.create({ 
     username: 'nd', 
-    password: 'm'
+    password: 'm',
+    api_key: 'api_key_123'
   }).fetch()
 
   await sails.models.user.addToCollection(user.id, 'permissions').members([permission.id])
@@ -46,8 +47,7 @@ test.serial('/users/:id/permissions returns users permissions when logged in', a
 
   const res = await supertest(sails.hooks.http.app)
     .get(`/users/${user.id}/permissions`)
-    // TODO: set the actual key for the user
-    .set('authorization', 'key')
+    .set('api_key', 'api_key_123')
 
   t.is(res.status, 200)
   t.deepEqual(res.body, updatedUser.permissions)
