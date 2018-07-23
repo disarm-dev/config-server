@@ -27,7 +27,7 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    instanceconfigs: {
+    instance_configs: {
       collection: 'instanceconfig',
       via: 'instance'
     },

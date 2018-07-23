@@ -22,6 +22,8 @@ export function setup_sails() {
 export async function clear_db() {
   await sails.models.user.destroy({})
   await sails.models.permission.destroy({})
+  await sails.models.instance.destroy({})
+  await sails.models.instanceconfig.destroy({})
 }
 
 export async function teardown_sails() {

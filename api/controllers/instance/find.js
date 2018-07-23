@@ -13,25 +13,19 @@ module.exports = {
 
 
   exits: {
-    not_authorised_user: {
+    fail: {
       responseType:'unauthorised'
     },
-    authorised_user: {
+    success: {
       responseType:'ok'
     },
   },
 
 
   fn: async function (inputs, exits) {
-    /*
-    something like 
-    
-    */
-    const all = await InstanceConfig.find() 
-    // Filter for public visibility
-    const slugs = all.map(i => i.slug)
-    // return exits.succ ess(slugs);
-    return exits.authorised_user(slugs)
+    // TODO: only return instances the user has access to 
+    const all = await Instance.find().populate('instance_configs', {select: ['version']}) 
+    return exits.success(all)
   }
 
 };

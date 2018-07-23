@@ -14,15 +14,9 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-    
-    name: {
-      type: 'string',
-      required: true,
-    },
 
-    instance_config_version:{
+    version:{
       type: 'number',
-      autoIncrement: true
     },
 
     application_version:{
