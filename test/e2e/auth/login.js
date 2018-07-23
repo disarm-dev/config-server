@@ -29,7 +29,6 @@ test('can login with correct user and password', async t => {
       username,
       password
     })
-    console.log('res.body', res.body);
   t.is(res.status, 200)
   t.is(res.body.username, 'nd')
 })

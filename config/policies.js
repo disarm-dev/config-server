@@ -17,16 +17,8 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': ['isLoggedIn'],
   'auth': {
     'login': true,
-    'logout': ['isLoggedIn']
-  },
-  'instance-config': {
-    'public-titles': ['isLoggedIn'],
-    'published-configs': ['isLoggedIn'],
-  },
-  'user': {
-    'permissions': ['isLoggedIn'],
   }
 };
