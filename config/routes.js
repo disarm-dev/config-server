@@ -33,6 +33,7 @@ module.exports.routes = {
   'GET /users/:id/permissions': 'user.permissions',
 
   'GET /instances': 'instance.find',
+  'GET /instances/:id': 'instance.findOne',
 
   'GET /instances/:id/published_instance_configs': 'instance-config.find',
   'GET /instances/:id/published_instance_configs/:version': 'instance-config.findOne',
