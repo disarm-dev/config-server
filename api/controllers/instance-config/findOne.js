@@ -12,11 +12,6 @@ module.exports = {
       description: 'The id of the config to look up.',
       type: 'number',
       required: true
-    },
-    version: {
-      description: 'The version of the instance-config to look up.',
-      type: 'number',
-      required: true
     }
   },
 
@@ -32,15 +27,8 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    // can user access this action?
-    console.log('Instance Controller')
-    const all = await InstanceConfig.find() 
-    // Filter for public visibility
-    const slugs = all.map(i => i.slug)
-    // return exits.succ ess(slugs);
-
-    
-    return exits.success(slugs)
+    const instance_config = await InstanceConfig.findOne({id: inputs.id}) 
+    return exits.success(instance_config)
   }
 
 };

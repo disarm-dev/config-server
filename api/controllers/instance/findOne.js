@@ -27,7 +27,6 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    // TODO: only return instances the user has access to 
     const instance = await Instance.findOne({id: inputs.id})
     return exits.success(instance)
   }
