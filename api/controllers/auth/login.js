@@ -24,33 +24,33 @@ module.exports = {
     login_fail: {
       responseType:'unauthorised'
     },
-    authorised_user: {
+    success: {
       responseType:'ok'
     },
   },
 
 
   fn: async function (inputs, exits) {
-    let {username, password} = inputs;
+    const {username, password} = inputs;
   
     const user = await User.findOne({username})
-    console.log(user)
-    if(user){
-      await sails
+
+    if (!user) {
+      return exits.login_fail('Invalid username or password')
+    }
+    
+    await sails
       .helpers
       .verifyPassword
-      .with({password,encrypted_password:user.password})
-      .intercept('fail','login_fail')
+      .with({ password, encrypted_password: user.encrypted_password})
+      .intercept('fail', () => {
+        return exits.login_fail('Invalid username or password')
+      })
 
-      let api_key = md5(user.username+user.password)
-      
-      let loged_in_user = await User.update(user).set({api_key}).fetch();
-      sails.log.silly(loged_in_user)
-      return exits.success(loged_in_user)      
-    }
-
+    const api_key = md5(user.username + user.encrypted_password)
     
-   return exits.login_fail('User Name Or Password is Incorrect')
+    const [logged_in_user] = await User.update({ id: user.id }, { api_key }).fetch();
+    
+    return exits.success(logged_in_user)
   }
-
 };

@@ -29,7 +29,7 @@ module.exports = {
     
     const encrypted_password = await sails.helpers.encryptPassword.with({password}).intercept('fail','signup_fail')
     
-    await User.create({ username, password: encrypted_password})
+    await User.create({ username, encrypted_password})
     
     return exits.success()
   }

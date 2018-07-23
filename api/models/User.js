@@ -22,7 +22,7 @@ module.exports = {
       required: true,
     },
 
-    password:{
+    encrypted_password: {
       type: 'string'
     },
 
