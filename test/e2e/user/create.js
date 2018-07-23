@@ -11,7 +11,7 @@ test.after(async () => {
   await teardown_sails()
 })
 
-test.afterEach(async () => {
+test.afterEach.always(async () => {
   await clear_db()
 })
 
