@@ -15,14 +15,19 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     
+    
     username: {
       type: 'string',
+      unique: true,
       required: true,
     },
 
     password:{
-      type: 'string',
-      autoIncrement: true
+      type: 'string'
+    },
+
+    api_key:{
+      type:'string'
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
