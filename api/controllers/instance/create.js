@@ -8,28 +8,27 @@ module.exports = {
 
 
   inputs: {
-    instance:{
-      type: 'json',
-      required:true
+    name: {
+      type: 'string',
+      required: true
     }
   },
 
 
   exits: {
-    not_authorised_user: {
+    fail: {
       responseType:'unauthorised'
     },
-    authorised_user: {
+    success: {
       responseType:'ok'
     },
   },
 
 
   fn: async function (inputs, exits) {
-  
-    const all = await Instance.create({name:inputs.instance.name}) 
+    const instance = await Instance.create({name: inputs.name}).fetch()
    
-    return exits.authorised_user(all)
+    return exits.success(instance)
   }
 
 };
