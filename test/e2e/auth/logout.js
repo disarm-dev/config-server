@@ -15,7 +15,13 @@ test.afterEach.always(async () => {
   await clear_db()
 })
 
-test.todo('returns error if not logged in')
+test('returns error if not logged in', async t => {
+  const res = await supertest(sails.hooks.http.app)
+    .post(`/auth/logout`)
+    .send()
+    
+  t.is(res.status, 401)
+})
 
 test('can logout with valid api_key', async t => {
   const username = 'nd'

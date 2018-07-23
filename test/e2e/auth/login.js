@@ -15,8 +15,6 @@ test.afterEach.always(async () => {
   await clear_db()
 })
 
-test.todo('returns error if not logged in')
-
 test('can login with correct user and password', async t => {
   const username = 'nd'
   const password = 'malaria123'
