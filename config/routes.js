@@ -36,8 +36,7 @@ module.exports.routes = {
   'GET /instances/:id': 'instance.findOne',
   'GET /instances/:id/published_instance_configs': 'instance-config.find',
 
-
-  'GET /instanceconfig/:id': 'instance-config.findOne',
+  'GET /instanceconfigs/:id': 'instance-config.findOne',
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

@@ -16,14 +16,14 @@ test.afterEach.always(async () => {
   await clear_db()
 })
 
-test.serial('/instanceconfig/:id returns 401 when not logged in', async t => {
+test.serial('/instanceconfigs/:id returns 401 when not logged in', async t => {
   const res = await supertest(sails.hooks.http.app)
-    .get('/instanceconfig/1')
+    .get('/instanceconfigs/1')
 
   t.is(res.status, 401)
 });
 
-test.serial('/instanceconfig/:id returns the instance_config', async t => {
+test.serial('/instanceconfigs/:id returns the instance_config', async t => {
   await sails.models.user.create({username: 'nd', api_key: 'api_key_123'})
 
   const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
@@ -37,7 +37,7 @@ test.serial('/instanceconfig/:id returns the instance_config', async t => {
   instance_config.instance = instance
 
   const res = await supertest(sails.hooks.http.app)
-    .get(`/instanceconfig/${instance_config.id}`)
+    .get(`/instanceconfigs/${instance_config.id}`)
     .set('api_key', 'api_key_123')
 
   t.is(res.status, 200)
