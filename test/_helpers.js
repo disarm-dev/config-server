@@ -1,6 +1,4 @@
-import { resolve } from 'path';
-
-export const sails = require('sails');
+const sails = require('sails');
 
 export function setup_sails() {
   return new Promise((resolve, reject) => {
@@ -12,19 +10,21 @@ export function setup_sails() {
       // and disable all logs except errors and warnings:
       hooks: { grunt: false },
       log: { level: 'silent' },
-
-    }, (err) => {
+    }, async (err) => {
       if (err) {
         reject(err)
-      }
-
+      }      
       resolve()
     });
   })
-  
 }
 
-export function teardown_sails() {
+export async function clear_db() {
+  await sails.models.user.destroy({})
+  await sails.models.permission.destroy({})
+}
+
+export async function teardown_sails() {
   return new Promise((resolve, reject) => {
     sails.lower((err) => {
       if (err) reject(err)
