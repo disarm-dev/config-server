@@ -29,10 +29,11 @@ module.exports.routes = {
   'POST /auth/logout': 'auth.logout',
 
   'POST /users': 'user.create',
-  'GET /users/:id/permissions': 'user.permissions',
   'GET /users': 'user.find',
+  'GET /users/:id/permissions': 'user.permissions',
 
-  'GET /instances/:id/published_instance_configs': 'instance-config.published-configs',
+  'GET /instances/:id/published_instance_configs': 'instance-config.find',
+  'GET /instances/:id/published_instance_configs/:version': 'instance-config.findOne',
 
   // 'GET /instances': 'instance-config.instance',
   // '/config': 'instance-config.create-config',

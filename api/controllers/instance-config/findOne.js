@@ -1,22 +1,31 @@
 module.exports = {
 
 
-  friendlyName: 'List Instances for an authenticated user',
+  friendlyName: 'Get instance-config',
 
 
-  description: 'List out just the titles or slugs for all publicly-visible InstanceConfigs',
+  description: 'Get a single instance-config',
 
 
   inputs: {
-
+    id: {
+      description: 'The id of the config to look up.',
+      type: 'number',
+      required: true
+    },
+    version: {
+      description: 'The version of the instance-config to look up.',
+      type: 'number',
+      required: true
+    }
   },
 
 
   exits: {
-    not_authorised_user: {
+    fail: {
       responseType:'unauthorised'
     },
-    authorised_user: {
+    success: {
       responseType:'ok'
     },
   },
@@ -29,7 +38,9 @@ module.exports = {
     // Filter for public visibility
     const slugs = all.map(i => i.slug)
     // return exits.succ ess(slugs);
-    return exits.authorised_user(slugs)
+
+    
+    return exits.success(slugs)
   }
 
 };

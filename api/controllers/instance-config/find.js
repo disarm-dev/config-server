@@ -28,6 +28,7 @@ module.exports = {
   fn: async function (inputs, exits) {
     // TODO: Ensure user has permissions to the instance_configs 
     // TODO: should probably filter where {published: true}
+    // TODO: Only return titles or a preview, not entire configs
     const instanceConfigs = await InstanceConfig.find({instance: inputs.id})
     return exits.authorised_user(instanceConfigs)
   }
