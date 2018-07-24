@@ -23,10 +23,11 @@ test('returns error if not logged in', async t => {
 })
 
 test('can get all users', async t => {
-  await sails.models.user.create({ username: 'nd', password: 'm', api_key: 'api_key_123' })
+  const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
+  await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
 
-  await sails.models.user.create({ username: 'js', password: 'm' })
-  await sails.models.user.create({ username: 'sm', password: 'm' })
+  await sails.models.user.create({ username: 'js', encrypted_password: '123' })
+  await sails.models.user.create({ username: 'sm', encrypted_password: '123' })
 
   const res = await supertest(sails.hooks.http.app)
     .get(`/users`)
