@@ -6,27 +6,27 @@
  */
 
 module.exports = {
-
-  schema: true,
-
   attributes: {
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
-    version:{
+    version: {
       type: 'number',
+      required: true,
     },
 
-    application_version:{
+    application_version: {
       type: 'string',
-      regex: /^(\d+\.)(\d+)$/
+      regex: /^\d+\.\d+$/
     },
 
-    instance_configuration:{
-      type:'json',
-      required:true
+
+    // See https://www.martinfowler.com/eaaCatalog/serializedLOB.html
+    lob: {
+      type: 'json',
+      required: true
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗

@@ -6,15 +6,12 @@
  */
 
 module.exports = {
-
-  schema: true,
-
   attributes: {
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-    name:{
+    name: {
       type: 'string',
       required: true
     },
@@ -27,14 +24,16 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    instance_configs: {
+    // TODO: Figure this out
+    instanceconfigs: {
       collection: 'instanceconfig',
       via: 'instance'
     },
-    users:{
-      collection:'user',
-      via:'instance',
-      through:'permission'
+
+    users: {
+      collection: 'user',
+      via: 'instance_id',
+      through: 'permission'
     }
   },
 

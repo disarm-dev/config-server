@@ -6,9 +6,6 @@
  */
 
 module.exports = {
-
-  schema: true,
-
   attributes: {
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -23,12 +20,14 @@ module.exports = {
     },
 
     encrypted_password: {
-      type: 'string'
+      type: 'string',
+      required: true,
     },
 
-    api_key:{
-      type:'string'
-    },
+
+    // api_key: {
+    //   type:'string'
+    // },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -41,7 +40,7 @@ module.exports = {
 
     instances: {
       collection: 'instance',
-      via: 'uid',
+      via: 'user_id',
       through:'permission'
     },
 

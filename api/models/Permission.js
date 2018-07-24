@@ -6,9 +6,6 @@
  */
 
 module.exports = {
-
-  schema: true,
-
   attributes: {
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -29,10 +26,10 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    uid: {
+    user_id: {
       model: 'user'
     },
-    instance:{
+    instance_id: {
       model:'instance'
     }
   },
