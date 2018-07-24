@@ -46,6 +46,7 @@ module.exports = {
 
     permissions: {
       collection: 'permission',
+      via: 'user_id'
     }
   }
 
