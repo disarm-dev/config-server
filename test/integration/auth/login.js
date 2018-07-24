@@ -27,6 +27,7 @@ test('can login with correct user and password', async t => {
       username,
       password
     })
+  
   t.is(res.status, 200)
   t.is(res.body.username, 'nd')
   t.true(res.body.api_key.length > 0)
