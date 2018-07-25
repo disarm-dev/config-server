@@ -16,7 +16,7 @@ test.afterEach.always(async () => {
   await clear_db()
 })
 
-test.serial('/largefiles returns 401 when not logged in', async t => {
+test.serial('/largefiles/:id returns 401 when not logged in', async t => {
   const res = await supertest(sails.hooks.http.app)
     .get('/largefiles/1')
 
@@ -24,7 +24,7 @@ test.serial('/largefiles returns 401 when not logged in', async t => {
 });
 
 
-test.serial('GET /largefiles returns a file', async t => {
+test.serial('GET /largefiles/:id returns a file', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
 

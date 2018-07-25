@@ -8,6 +8,7 @@
  * https://sailsjs.com/anatomy/config/routes-js
  */
 
+
 module.exports.routes = {
 
   /***************************************************************************
@@ -33,14 +34,14 @@ module.exports.routes = {
   'GET /users/:id/permissions': 'user.permissions',
   
   'GET /instances': 'instance.find',
-  'GET /instances/:id': 'instance.findOne',
+  'GET /instances/:id': 'instance.findone',
   'GET /instances/:id/published_instanceconfigs': 'instance-config.find',
   'POST /instances': 'instance.create',
   
-  'GET /instanceconfigs/:id': 'instance-config.findOne',
+  'GET /instanceconfigs/:id': 'instance-config.findone',
 
   'POST /largefiles': 'large-file-storage.create',
-  'GET /largefiles/:id': 'large-file-storage.findOne',
+  'GET /largefiles/:id': 'large-file-storage.findone',
   
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

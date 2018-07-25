@@ -22,7 +22,8 @@ module.exports = {
   },
 
   fn: async function (inputs, exits) {
-    const file = await LargeFile.findOne({ id: inputs.id })
+    const id = this.req.param('id')
+    const file = await LargeFile.findOne({id})
     return exits.success(file)
   }
 };

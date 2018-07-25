@@ -29,9 +29,6 @@ test.serial('/instances/:id returns 200 when logged in', async t => {
 
   const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
 
-  instance.instanceconfigs = []
-  instance.users = []
-
   const res = await supertest(sails.hooks.http.app)
     .get(`/instances/${instance.id}`)
     .set('api_key', 'api_key_123')
