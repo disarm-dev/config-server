@@ -1,4 +1,4 @@
-const md5 = require('md5');
+const uuid = require('uuid/v4')
 
 module.exports = {
 
@@ -45,10 +45,18 @@ module.exports = {
       .with({ password, encrypted_password: user.encrypted_password})
       .intercept('fail', 'login_fail')
 
-    const api_key = md5(user.username + user.encrypted_password)
+    const api_key = uuid()
     
-    const [logged_in_user] = await User.update({ id: user.id }, { api_key }).fetch();
+    const found_session = await Session.findOne({user_id: user.id})
     
-    return exits.success(logged_in_user)
+    if (found_session) {
+      await Session.update({ id: found_session.id }, {api_key})
+    } else {
+      await Session.create({ user_id: user.id, api_key })
+    }
+
+    user.api_key = api_key
+
+    return exits.success(user)
   }
 };

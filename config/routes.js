@@ -31,14 +31,14 @@ module.exports.routes = {
   'POST /users': 'user.create',
   'GET /users': 'user.find',
   'GET /users/:id/permissions': 'user.permissions',
-
+  
   'GET /instances': 'instance.find',
   'GET /instances/:id': 'instance.findOne',
   'GET /instances/:id/published_instanceconfigs': 'instance-config.find',
   'POST /instances': 'instance.create',
-
+  
   'GET /instanceconfigs/:id': 'instance-config.findOne',
-
+  
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

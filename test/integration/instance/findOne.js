@@ -24,10 +24,12 @@ test.serial('/instances/:id returns 401 when not logged in', async t => {
 });
 
 test.serial('/instances/:id returns 200 when logged in', async t => {
-  await sails.models.user.create({username: 'nd', api_key: 'api_key_123'})
+  const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
+  await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
+
   const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
 
-  instance.instance_configs = []
+  instance.instanceconfigs = []
   instance.users = []
 
   const res = await supertest(sails.hooks.http.app)
