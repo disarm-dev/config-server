@@ -18,14 +18,15 @@ test.afterEach.always(async () => {
 
 test.serial('POST /instances returns 401 when not logged in', async t => {
   const res = await supertest(sails.hooks.http.app)
-    .post('/instances/1')
+    .post('/instances')
     .send()
 
   t.is(res.status, 401)
 });
 
 test.serial('POST /instances creates a new instance', async t => {
-  await sails.models.user.create({ username: 'nd', api_key: 'api_key_123' })
+  const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
+  await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
 
   const instances_before = await sails.models.instance.find()
 

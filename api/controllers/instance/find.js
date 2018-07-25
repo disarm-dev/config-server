@@ -24,7 +24,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // TODO: only return instances the user has access to 
-    const all = await Instance.find().populate('instance_configs', {select: ['version']}) 
+    const all = await Instance.find()
     return exits.success(all)
   }
 

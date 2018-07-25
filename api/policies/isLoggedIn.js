@@ -4,9 +4,9 @@ module.exports = async function (req, res, proceed) {
   }
 
   const api_key = req.get('api_key')
-  const user = await User.findOne({api_key});
+  const session = await Session.findOne({api_key});
 
-  if (!user) {
+  if (!session) {
     return res.status(401).send('Invalid api_key header');
   }
   

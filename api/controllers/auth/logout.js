@@ -1,4 +1,3 @@
-const md5 = require('md5');
 
 module.exports = {
 
@@ -26,10 +25,8 @@ module.exports = {
   fn: async function (inputs, exits) {
     const api_key  = this.req.get('api_key');
 
-    const user = await User.findOne({ api_key })
-
-    await User.update({ id: user.id }, { api_key: '' })
-
+    await Session.update({ api_key }, {api_key: ''})
+    
     return exits.success()
   }
 };
