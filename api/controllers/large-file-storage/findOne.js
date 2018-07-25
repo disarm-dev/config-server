@@ -1,3 +1,5 @@
+const SkipperDisk = require('skipper-disk');
+
 module.exports = {
 
   friendlyName: 'Get large file',
@@ -24,6 +26,18 @@ module.exports = {
   fn: async function (inputs, exits) {
     const id = this.req.param('id')
     const file = await LargeFile.findOne({id})
-    return exits.success(file)
+    
+    
+    var fileAdapter = SkipperDisk(/* optional opts */);
+
+    // set the filename to the same file as the user uploaded
+    this.res.set("Content-disposition", "attachment; filename='" + file.name + "'");
+
+    // Stream the file down
+    return fileAdapter.read(file.file.fd)
+      .on('error', function (err) {
+        return exits.fail(err);
+      })
+      .pipe(this.res);
   }
 };

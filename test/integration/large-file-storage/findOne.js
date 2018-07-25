@@ -29,12 +29,22 @@ test.serial('GET /largefiles/:id returns a file', async t => {
   await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
 
   const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
-  const file = await sails.models.largefile.create({name: 'name', version: 1, instance: instance.id, file: {is_file: true}}).fetch()
 
-  const res = await supertest(sails.hooks.http.app)
-    .get(`/largefiles/${file.id}`)
+  const upload_res = await supertest(sails.hooks.http.app)
+    .post('/largefiles')
+    .field('name', 'test_file')
+    .field('version', 2)
+    .field('instance_id', instance.id)
+    .attach('large_file', 'test/fixtures/test.geojson')
     .set('api_key', 'api_key_123')
 
-  t.deepEqual(res.body, file)
+  t.is(upload_res.status, 200)
+  // t.is(upload_res.body.id, true)
+
+  const res = await supertest(sails.hooks.http.app)
+    .get(`/largefiles/${upload_res.body.id}`)
+    .set('api_key', 'api_key_123')
+
+  // TODO: figure out how to actually test the file is being returned correctly.
   t.is(res.status, 200)
 });
