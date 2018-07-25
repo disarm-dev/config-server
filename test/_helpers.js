@@ -26,6 +26,7 @@ export async function clear_db() {
     await sails.models.instance.destroy({})
     await sails.models.instanceconfig.destroy({})
     await sails.models.session.destroy({})
+    await sails.models.largefile.destroy({})
     // clear the uploaded files
     rimraf('.tmp/uploads', () => {
       resolve()
