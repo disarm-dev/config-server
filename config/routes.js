@@ -40,6 +40,7 @@ module.exports.routes = {
   'GET /instanceconfigs/:id': 'instance-config.findOne',
 
   'POST /largefiles': 'large-file-storage.create',
+  'GET /largefiles/:id': 'large-file-storage.findOne',
   
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
