@@ -14,7 +14,7 @@ module.exports = {
     
     value: {
       type: 'string',
-      required: true,
+      required: false,
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
