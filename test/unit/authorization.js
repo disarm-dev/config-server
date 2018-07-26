@@ -37,13 +37,26 @@ test('User Can read Authorized instance', async t => {
 
 
 
-test('User Can not perform Unauthorized action on aninstance', async t => {
+test('User Can not perform Unauthorized action on an instance', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   const resource = await sails.models.instance.create({  name: 'Botswana' }).fetch()
 
   await sails.helpers.addPermission.with({user_id:user.id, instance_id:resource.id, value:'read'})
   
   let authorized = await sails.helpers.can.with({user_id:user.id, instance_id:resource.id, value:'write'})
+  
+  t.true(!authorized)
+})
+
+
+test('User Can access unauthorized instance', async t => {
+  const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
+  const bwa_instance = await sails.models.instance.create({  name: 'Botswana' }).fetch()
+  const nam_instance= await sails.models.instance.create({  name: 'Namibia' }).fetch()
+
+  await sails.helpers.addPermission.with({user_id:user.id, instance_id:bwa_instance.id, value:'read'})
+  
+  let authorized = await sails.helpers.can.with({user_id:user.id, instance_id:nam_instance.id, value:'write'})
   
   t.true(!authorized)
 })
