@@ -37,7 +37,7 @@ test('User Can read Authorized instance', async t => {
 
 
 
-test('User Can not read Unauthorized instance', async t => {
+test('User Can not perform Unauthorized action on aninstance', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   const resource = await sails.models.instance.create({  name: 'Botswana' }).fetch()
 
