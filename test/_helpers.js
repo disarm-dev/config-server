@@ -1,5 +1,5 @@
 const sails = require('sails');
-
+const rimraf = require('rimraf')
 export function setup_sails() {
   return new Promise((resolve, reject) => {
     sails.lift({
@@ -9,7 +9,7 @@ export function setup_sails() {
       // For example, we might want to skip the Grunt hook,
       // and disable all logs except errors and warnings:
       hooks: { grunt: false },
-      log: { level: 'silent' },
+      // log: { level: 'silent' },
     }, async (err) => {
       if (err) {
         reject(err)
@@ -20,11 +20,18 @@ export function setup_sails() {
 }
 
 export async function clear_db() {
-  await sails.models.user.destroy({})
-  await sails.models.permission.destroy({})
-  await sails.models.instance.destroy({})
-  await sails.models.instanceconfig.destroy({})
-  await sails.models.session.destroy({})
+  return new Promise(async (resolve, reject) => {
+    await sails.models.user.destroy({})
+    await sails.models.permission.destroy({})
+    await sails.models.instance.destroy({})
+    await sails.models.instanceconfig.destroy({})
+    await sails.models.session.destroy({})
+    await sails.models.largefile.destroy({})
+    // clear the uploaded files
+    rimraf('.tmp/uploads', () => {
+      resolve()
+    })
+  })
 }
 
 export async function teardown_sails() {

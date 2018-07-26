@@ -16,34 +16,35 @@ test.afterEach.always(async () => {
   await clear_db()
 })
 
-//
-// Both tests below return 404, not sure why, the routes are setup, but don't match apparently.
-//
-
-
-test.serial('/instanceconfigs/:id returns 401 when not logged in', async t => {
+test.serial('/largefiles/:id returns 401 when not logged in', async t => {
   const res = await supertest(sails.hooks.http.app)
-    .get('/instanceconfigs/1')
+    .get('/largefiles/1')
 
   t.is(res.status, 401)
 });
 
-test.serial('/instanceconfigs/:id returns the instance_config', async t => {
+
+test.serial('GET /largefiles/:id returns a file', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
 
   const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
 
-  const instance_config = await sails.models.instanceconfig.create({
-    version: 123,
-    lob: { applets: {} },
-    instance: instance.id
-  }).fetch()
-
-  const res = await supertest(sails.hooks.http.app)
-    .get(`/instanceconfigs/${instance_config.id}`)
+  const upload_res = await supertest(sails.hooks.http.app)
+    .post('/largefiles')
+    .field('name', 'test_file')
+    .field('version', 2)
+    .field('instance_id', instance.id)
+    .attach('large_file', 'test/fixtures/test.geojson')
     .set('api_key', 'api_key_123')
 
+  t.is(upload_res.status, 200)
+  // t.is(upload_res.body.id, true)
+
+  const res = await supertest(sails.hooks.http.app)
+    .get(`/largefiles/${upload_res.body.id}`)
+    .set('api_key', 'api_key_123')
+
+  // TODO: figure out how to actually test the file is being returned correctly.
   t.is(res.status, 200)
-  t.deepEqual(res.body, instance_config)
 });
