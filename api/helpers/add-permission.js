@@ -28,12 +28,12 @@ module.exports = {
   //TODO How do we handle group permissions
   fn: async function (inputs, exits) {
     let { user_id, instance_id, value } = inputs;
-    try{
+    try {
       await User.addToCollection(user_id, 'instances').members(instance_id)
       const permission = await Permission.update({user_id, instance_id},{value}).fetch()
       return exits.success(permission)
-    }catch(e){
-      exits.fail(e)
+    } catch(e) {
+      return exits.fail(e)
     }
   }
 };

@@ -28,7 +28,7 @@ module.exports = {
       if (err) return exits.fail('An error occured');
       sails.log.silly(inputs,hash)
       return exits.success(hash)
-  });
+    });
   }
 };
 

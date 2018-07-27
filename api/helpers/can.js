@@ -28,11 +28,11 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     let { user_id, instance_id, value } = inputs;
-    try{
+    try {
       const permission = await Permission.findOne({user_id, instance_id, value})
-      return exits.success(permission?true:false)
-    }catch(e){
-      exits.fail(e)
+      return exits.success(permission ? true : false)
+    } catch(e) {
+      return exits.fail(e)
     }
   }
 };
