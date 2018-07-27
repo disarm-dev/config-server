@@ -23,6 +23,10 @@ module.exports = {
       type: 'string',
       required: true,
     },
+    tag:{
+      type:'string',
+      isIn:['super-admin','admin','general','guest']
+    },
 
 
     // api_key: {

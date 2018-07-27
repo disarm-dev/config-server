@@ -61,5 +61,33 @@ test('User Can access unauthorized instance', async t => {
   t.true(!authorized)
 })
 
+test.todo('super-admin can edit users')
+
+test.todo('super admin can create an instance')
+
+test.todo('Super admin can delete an instance')
+
+test.todo('super admin can edit all instance')
+
+test.todo('super admin can edit instance configs')
+
+test.todo('super admin can edit auxiliary files')
+
+test.todo('super admin can assign super powers')
+
+test.todo('super admin can create admins')
+
+test.todo('super amdin can crud any any instance config')
+
+test.todo('super user can CRUD applet config')
+
+test.todo('super admin can CRUD aux files')
+
+test.todo('admin user can CRUD specific instance users')
+
+test.todo('admin user can edit specific instances')
+
+
+
 
 

@@ -25,6 +25,7 @@ module.exports = {
     }
   },
 
+  //TODO How do we handle group permissions
   fn: async function (inputs, exits) {
     let { user_id, instance_id, value } = inputs;
     try{
