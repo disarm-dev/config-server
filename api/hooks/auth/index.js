@@ -8,15 +8,16 @@ module.exports = function auth(sails) {
     },
     routes: {
       before: {
-        'GET /*': function (req, res, next) {
-          let user = req.user;
-          let resource = req.path;
-          if(can(user, 'View', resource)){
-            sails.log.info('Geting from ',resource)
+        'GET /*': function async (req, res, next) {
+          return next();
+         /*sails
+          .models['session']
+          .find({api_key:req.headers.api_key})
+          .populate('user_id')
+          .then(session => {
+            req.$session = session
             return next();
-          }else{
-            return 
-          }
+          })*/
         }
       }
     }
