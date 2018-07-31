@@ -65,7 +65,7 @@ module.exports = {
   },
 
 
-  fn: async function (inputs, exits) {
+  fn: async function (inputs, exits) { 
     const {
       applets,
       aggregations,

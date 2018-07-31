@@ -14,8 +14,7 @@ module.exports = {
     },
     value:{
       type:'string',
-      description: 'What the user is allowed to do',
-      required: true
+      description: 'What the user is allowed to do'
     }
   },
   exits: {
@@ -24,12 +23,20 @@ module.exports = {
     }
   },
 
-  //TODO How do we handle group permissions
+  
   fn: async function (inputs, exits) {
     let { user_id, instance_id, value } = inputs;
     try {
-      await User.addToCollection(user_id, 'instances').members(instance_id)
-      const permission = await Permission.update({user_id, instance_id},{value}).fetch()
+      let permission
+      if(value==='super-admin'){
+        pemrission = await Permission.create({user_id,value}).fetch()
+      }else if(!instance_id){
+        return exits.fail('No instance id')
+      }
+      else{
+        await User.addToCollection(user_id, 'instances').members(instance_id)
+        permission = await Permission.update({user_id, instance_id},{value}).fetch()
+      }
       return exits.success(permission)
     } catch(e) {
       return exits.fail(e)

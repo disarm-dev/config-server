@@ -11,13 +11,11 @@ module.exports = {
     },
     instance_id: {
       type: 'string',
-      description: 'Id from the Instance model',
-      required: true
+      description: 'Id from the Instance model'
     },
     value:{
       type:'string',
-      description: 'What the user is allowed to do',
-      required: true
+      description: 'What the user is allowed to do'
     }
   },
   exits: {
@@ -29,8 +27,10 @@ module.exports = {
   fn: async function (inputs, exits) {
     let { user_id, instance_id, value } = inputs;
     try {
+      const super_admin_permission = await Permission.findOne({user_id,value:'super-admin'})
       const permission = await Permission.findOne({user_id, instance_id, value})
-      return exits.success(permission ? true : false)
+      const admin_permission = await Permission.findOne({user_id, instance_id, value:'admin'})
+      return exits.success(!!super_admin_permission||!!permission||!!admin_permission)
     } catch(e) {
       return exits.fail(e)
     }

@@ -25,15 +25,16 @@ module.exports = {
   },
 
 
-  fn: async function (inputs, exits) {
+  fn: async function (inputs, exits) { 
     // TODO: Ensure user has permissions to the instance_configs 
     // TODO: should probably filter where {published: true}
     // TODO: Only return titles or a preview, not entire configs
     let {api_key} = this.req.headers
-    let {user_id} = await Session.find({api_key})
+    let {user_id} = await Session.findOne({api_key})
     let instance_id = inputs.id
-    if(!sails.helpers.can.with({user_id,user_id,value:'read'})){
-      return exits.authorised_user('Permission denied')
+    let can = await sails.helpers.can.with({user_id,instance_id,value:'read'})
+    if(!can){
+      return exits.not_authorised_user('Permission denied')
     }
     const instanceConfigs = await InstanceConfig.find({instance: inputs.id})
     return exits.authorised_user(instanceConfigs)

@@ -25,7 +25,15 @@ module.exports = {
   },
 
 
-  fn: async function (inputs, exits) {
+  fn: async function (inputs, exits) { 
+    let {api_key} = this.req.headers
+    let {user_id} = await Session.findOne({api_key})
+    let instance_id = inputs.id
+    const can = await sails.helpers.can.with({user_id,value:'val'})
+    if(!can){
+      return exits.fail('Permission denied')
+    }
+
     const instance = await Instance.create({name: inputs.name}).fetch()
    
     return exits.success(instance)

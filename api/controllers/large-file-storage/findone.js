@@ -23,7 +23,15 @@ module.exports = {
     },
   },
 
-  fn: async function (inputs, exits) {
+  fn: async function (inputs, exits) { 
+
+    let {api_key} = this.req.headers
+    let {user_id} = await Session.find({api_key})
+    let instance_id = inputs.id
+    if(!sails.helpers.can.with({user_id,user_id,value:'read'})){
+      return exits.authorised_user('Permission denied')
+    }
+
     const id = this.req.param('id')
     const file = await LargeFile.findOne({id})
     

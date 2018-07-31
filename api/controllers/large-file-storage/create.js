@@ -35,7 +35,15 @@ module.exports = {
   },
 
 
-  fn: function (inputs, exits) {
+  fn: function (inputs, exits) { 
+
+    let {api_key} = this.req.headers
+    let {user_id} = await Session.find({api_key})
+    let instance_id = inputs.id
+    if(!sails.helpers.can.with({user_id,user_id,value:'read'})){
+      return exits.authorised_user('Permission denied')
+    }
+
     
     this.req.file('large_file').upload({}, async (err, files) => {
       if (err) {
