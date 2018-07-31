@@ -30,6 +30,8 @@ test.serial('POST /instances creates a new instance', async t => {
 
   const instances_before = await sails.models.instance.find()
 
+  await sails.helpers.addPermission.with({user_id:user.id , value:'super-admin'})
+
   t.is(instances_before.length, 0)
 
   const res = await supertest(sails.hooks.http.app)

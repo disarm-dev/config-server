@@ -33,6 +33,7 @@ test.serial('/instanceconfigs/:id returns the instance_config', async t => {
   await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
 
   const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
+  await sails.helpers.addPermission.with({user_id: user.id, instance_id: instance.id, value:'admin'})
 
   const instance_config = await sails.models.instanceconfig.create({
     version: 123,
