@@ -10,8 +10,7 @@ module.exports = {
     },
     instance_id: {
       type: 'string',
-      description: 'Id from the Instance model',
-      required: true
+      description: 'Id from the Instance model'
     },
     value:{
       type:'string',
