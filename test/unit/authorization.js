@@ -18,20 +18,20 @@ test.afterEach.always(async () => {
 
 test('Permission can be given to a user to access a Config', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
-  const resource = await sails.models.instance.create({  name: 'Botswana' }).fetch()
-  let permission = await sails.helpers.addPermission.with({user_id:user.id, instance_id:resource.id, value:'read'})
-  t.is(permission[0].value,'read')
+  const resource = await sails.models.instance.create({ name: 'Botswana' }).fetch()
+  let permission = await sails.helpers.addPermission.with({ user_id: user.id, instance_id: resource.id, value: 'read' })
+  t.is(permission[0].value, 'read')
 })
 
 
 test('User Can read Authorized instance', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
-  const resource = await sails.models.instance.create({  name: 'Botswana' }).fetch()
+  const resource = await sails.models.instance.create({ name: 'Botswana' }).fetch()
 
-  await sails.helpers.addPermission.with({user_id:user.id, instance_id:resource.id, value:'read'})
-  
-  let authorized = await sails.helpers.can.with({user_id:user.id, instance_id:resource.id, value:'read'})
-  
+  await sails.helpers.addPermission.with({ user_id: user.id, instance_id: resource.id, value: 'read' })
+
+  let authorized = await sails.helpers.can.with({ user_id: user.id, instance_id: resource.id, value: 'read' })
+
   t.true(authorized)
 })
 
@@ -39,25 +39,35 @@ test('User Can read Authorized instance', async t => {
 
 test('User Can not perform Unauthorized action on an instance', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
-  const resource = await sails.models.instance.create({  name: 'Botswana' }).fetch()
+  const resource = await sails.models.instance.create({ name: 'Botswana' }).fetch()
 
-  await sails.helpers.addPermission.with({user_id:user.id, instance_id:resource.id, value:'read'})
-  
-  let authorized = await sails.helpers.can.with({user_id:user.id, instance_id:resource.id, value:'write'})
-  
+  await sails.helpers.addPermission.with({ user_id: user.id, instance_id: resource.id, value: 'read' })
+
+  let authorized = await sails.helpers.can.with({ user_id: user.id, instance_id: resource.id, value: 'write' })
+
   t.true(!authorized)
 })
 
 
 test('User Can access unauthorized instance', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
-  const bwa_instance = await sails.models.instance.create({  name: 'Botswana' }).fetch()
-  const nam_instance= await sails.models.instance.create({  name: 'Namibia' }).fetch()
+  const bwa_instance = await sails.models.instance.create({ name: 'Botswana' }).fetch()
+  const nam_instance = await sails.models.instance.create({ name: 'Namibia' }).fetch()
 
-  await sails.helpers.addPermission.with({user_id:user.id, instance_id:bwa_instance.id, value:'read'})
-  
-  let authorized = await sails.helpers.can.with({user_id:user.id, instance_id:nam_instance.id, value:'write'})
-  
+  await sails.helpers.addPermission.with({ user_id: user.id, instance_id: bwa_instance.id, value: 'read' })
+
+  let authorized = await sails.helpers.can.with({ user_id: user.id, instance_id: nam_instance.id, value: 'write' })
+
+  t.true(!authorized)
+})
+
+test('Group permission granted', async t => {
+  const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' ,tag:'super-admin'}).fetch()
+
+  await sails.helpers.userPermission.with({ user_id: user.id, value: 'read' })
+
+  let authorized = await sails.helpers.can.with({ user_id: user.id, instance_id: nam_instance.id, value: 'write' })
+
   t.true(!authorized)
 })
 
