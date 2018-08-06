@@ -26,11 +26,15 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     let { user_id, instance_id, value } = inputs;
+    instance_id = instance_id||-1;
     try {
-      const super_admin_permission = await Permission.findOne({user_id,value:'super-admin'})
-      const permission = await Permission.findOne({user_id, instance_id, value})
-      const admin_permission = await Permission.findOne({user_id, instance_id, value:'admin'})
-      return exits.success(!!super_admin_permission||!!permission||!!admin_permission)
+      let  permission
+      let admin_permission 
+      //const super_admin_permission = await Permission.findOne({user_id,value:'super-admin'})
+        permission  = await Permission.findOne({user_id, instance_id, value})
+        admin_permission = await Permission.findOne({user_id, instance_id:Number(instance_id)||-1, value:'admin'})  
+      //if fetching a user
+      return exits.success(!!permission||!!admin_permission)
     } catch(e) {
       return exits.fail(e)
     }

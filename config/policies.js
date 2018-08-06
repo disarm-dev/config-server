@@ -20,5 +20,8 @@ module.exports.policies = {
   '*': ['isLoggedIn'],
   'auth': {
     'login': true,
+  },
+  InstanceController:{
+    'create':'is-super-admin'
   }
 };
