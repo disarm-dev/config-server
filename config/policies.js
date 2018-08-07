@@ -23,5 +23,9 @@ module.exports.policies = {
   },
   InstanceController:{
     'create':'is-super-admin'
+  },
+  UserController:{
+    'create': 'is-super-admin',
+    'find': 'is-super-admin'
   }
 };
