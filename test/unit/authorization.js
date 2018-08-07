@@ -63,12 +63,12 @@ test('User Can access unauthorized instance', async t => {
 
 test('Group permission granted', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' ,tag:'super-admin'}).fetch()
-
-  await sails.helpers.userPermission.with({ user_id: user.id, value: 'read' })
+  const nam_instance = await sails.models.instance.create({ name: 'Namibia' }).fetch()
+  await sails.helpers.addPermission.with({ user_id: user.id, value: 'admin',instance_id: nam_instance.id })
 
   let authorized = await sails.helpers.can.with({ user_id: user.id, instance_id: nam_instance.id, value: 'write' })
 
-  t.true(!authorized)
+  t.true(authorized)
 })
 
 test.todo('super-admin can edit users')

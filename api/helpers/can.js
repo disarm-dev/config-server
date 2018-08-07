@@ -5,12 +5,13 @@ module.exports = {
   description: 'Authorizes a user to peform an action on a resource',
   inputs: {
     user_id: {
-      type: 'string',
+      type: 'number',
       description: 'Id from User model',
       required: true
     },
     instance_id: {
-      type: 'string',
+      type: 'number',
+      example:-1,
       description: 'Id from the Instance model'
     },
     value:{
@@ -26,15 +27,15 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     let { user_id, instance_id, value } = inputs;
-    instance_id = instance_id||-1;
+    let permission, admin_permission
     try {
-      let  permission
-      let admin_permission 
-      //const super_admin_permission = await Permission.findOne({user_id,value:'super-admin'})
+      const super_admin_permission = await Permission.findOne({user_id,value:'super-admin'})
+      if(Number(instance_id)>-1){
         permission  = await Permission.findOne({user_id, instance_id, value})
-        admin_permission = await Permission.findOne({user_id, instance_id:Number(instance_id)||-1, value:'admin'})  
+        admin_permission = await Permission.findOne({user_id, instance_id, value:'admin'})  
+      }
       //if fetching a user
-      return exits.success(!!permission||!!admin_permission)
+      return exits.success(!!super_admin_permission||!!permission||!!admin_permission)
     } catch(e) {
       return exits.fail(e)
     }
