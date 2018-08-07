@@ -33,5 +33,7 @@ test('can get all users', async t => {
     .get(`/users`)
     .set('api_key', 'api_key_123')
 
+    t.is(res.status,200)
+
   t.is(res.body.length, 3)
 })

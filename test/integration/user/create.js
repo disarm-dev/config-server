@@ -46,6 +46,7 @@ test('invalid username returns error', async t => {
 test('invalid password returns error', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
+  await sails.helpers.addPermission.with({user_id: user.id, value: 'super-admin'})
 
   const res = await supertest(sails.hooks.http.app)
     .post(`/users`)
