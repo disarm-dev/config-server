@@ -22,10 +22,13 @@ module.exports.policies = {
     'login': true,
   },
   InstanceController:{
-    'create':'is-super-admin'
+    'create':'is-super-admin',
+    'update': 'is-super-admin',
+    'delete': 'is-super-admin'
   },
   UserController:{
     'create': 'is-super-admin',
-    'find': 'is-super-admin'
+    'find': 'is-super-admin',
+    'delete': 'is-super-admin'
   }
 };

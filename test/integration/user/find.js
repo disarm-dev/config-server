@@ -29,6 +29,8 @@ test('can get all users', async t => {
   await sails.models.user.create({ username: 'js', encrypted_password: '123' })
   await sails.models.user.create({ username: 'sm', encrypted_password: '123' })
 
+  await sails.helpers.addPermission.with({user_id:user.id, value:'super-admin'})
+
   const res = await supertest(sails.hooks.http.app)
     .get(`/users`)
     .set('api_key', 'api_key_123')
