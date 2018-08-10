@@ -12,40 +12,39 @@ module.exports = {
       type: 'string',
       required: true
     },
-    instance_id:{
-      type:'string',
-      required:false
+    instance_id: {
+      type: 'string',
+      required: false
     },
-    value:{
-      type:'string',
-      required:true
+    value: {
+      type: 'string',
+      required: true
     }
   },
 
 
   exits: {
     fail: {
-      responseType:'unauthorised'
+      responseType: 'unauthorised'
     },
     success: {
-      responseType:'ok'
+      responseType: 'ok'
     },
   },
 
 
-  fn: async function (inputs, exits) { 
-    let {api_key} = this.req.headers
-    let {user_id} = await Session.findOne({api_key})
-    
-    const can = await sails.helpers.can.with({user_id,value:'admin',instance_id:inputs.instance_id})
+  fn: async function (inputs, exits) {
+    let { api_key } = this.req.headers
+    let { user_id } = await Session.findOne({ api_key })
 
-    if(!can){
-      return exits.fail('Permission denied')
+    const can = await sails.helpers.can.with({ user_id, action: 'create', resource:'permission', instance_id: inputs.instance_id, req: this.req })
+
+    if (can) {
+      const permission = await sails.helpers.addPermission.with(inputs).intercept('fail', 'fail')
+      return exits.success(permission)
     }
 
-    const permission = await sails.helpers.addPermission.with(inputs).intercept('fail','fail')
-   
-    return exits.success(permission)
+    return exits.fail('Permission denied')
   }
 
 };

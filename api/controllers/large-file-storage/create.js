@@ -35,16 +35,16 @@ module.exports = {
   },
 
 
-  fn: async function (inputs, exits) { 
+  fn: async function (inputs, exits) {
 
-    let {api_key} = this.req.headers
-    let {user_id} = await Session.findOne({api_key})
+    let { api_key } = this.req.headers
+    let { user_id } = await Session.findOne({ api_key })
     let instance_id = inputs.id
-    if(!sails.helpers.can.with({user_id,user_id,value:'read'})){
+    if (!sails.helpers.can.with({ user_id, user_id, value: 'read', req: this.req })) {
       return exits.authorised_user('Permission denied')
     }
 
-    
+
     this.req.file('large_file').upload({}, async (err, files) => {
       if (err) {
         return exits.fail(err)
@@ -60,7 +60,7 @@ module.exports = {
         version: inputs.version,
         instance: inputs.instance_id
       }).fetch()
-  
+
       return exits.success(file)
     })
   }

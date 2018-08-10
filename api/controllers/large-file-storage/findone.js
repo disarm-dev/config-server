@@ -23,19 +23,19 @@ module.exports = {
     },
   },
 
-  fn: async function (inputs, exits) { 
+  fn: async function (inputs, exits) {
 
-    let {api_key} = this.req.headers
-    let {user_id} = await Session.find({api_key})
+    let { api_key } = this.req.headers
+    let { user_id } = await Session.find({ api_key })
     let instance_id = inputs.id
-    if(!sails.helpers.can.with({user_id,user_id,value:'read'})){
+    if (!sails.helpers.can.with({ user_id, user_id, value: 'read', req: this.req })) {
       return exits.authorised_user('Permission denied')
     }
 
     const id = this.req.param('id')
-    const file = await LargeFile.findOne({id})
-    
-    
+    const file = await LargeFile.findOne({ id })
+
+
     var fileAdapter = SkipperDisk(/* optional opts */);
 
     // set the filename to the same file as the user uploaded

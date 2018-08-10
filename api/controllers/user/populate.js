@@ -31,10 +31,10 @@ module.exports = {
     const super_admin_permission = await Permission.findOne({user_id,value:'super-admin'})
 
     //Checking pemrissions
-    /*const can = (user_id === id)||super_admin_permission;
+    const can = (user_id === id)||super_admin_permission;
     if(!can){
       return exits.fail('Permission denied')
-    }*/
+    }
 
     //Action
     //const user = await User.findOne({id}).populate(association)

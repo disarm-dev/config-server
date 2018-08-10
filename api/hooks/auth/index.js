@@ -9,6 +9,7 @@ module.exports = function auth(sails) {
     routes: {
       before: {
         'GET /*': function async (req, res, next) {
+          sails.log.silly('Hook',req,res)
           return next();
          /*sails
           .models['session']
@@ -22,8 +23,4 @@ module.exports = function auth(sails) {
       }
     }
   }
-}
-
-function can(user, action, resource){
-  return true
 }

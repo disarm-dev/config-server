@@ -18,31 +18,28 @@ module.exports = {
 
   exits: {
     fail: {
-      responseType:'unauthorised'
+      responseType: 'unauthorised'
     },
     success: {
-      responseType:'ok'
+      responseType: 'ok'
     },
   },
 
 
   fn: async function (inputs, exits) {
-    //Get needed parameters
+
     let {api_key} = this.req.headers
     let {user_id} = await Session.findOne({api_key})
 
     let {id} = inputs
-    const super_admin_permission = await Permission.findOne({user_id,value:'super-admin'})
 
-    //Checking pemrissions
-    const can = (user_id === id)||super_admin_permission;
-    if(!can){
-      return exits.fail('Permission denied')
+    const can = await sails.helpers.can.with({user_id: id, resource: 'user', action: 'read', req: this.req})
+    if (can) {
+      const user = await User.findOne({id})
+      return exits.success(user)
     }
 
-    //Action
-    const user = await User.findOne({id})
-    return exits.success(user)
+    return exits.fail('Permission denied')
   }
 
 };

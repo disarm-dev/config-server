@@ -8,6 +8,10 @@ module.exports = {
 
 
   inputs: {
+    user_id:{
+      type:'string',
+      required:true
+    }
   },
 
 
@@ -22,11 +26,13 @@ module.exports = {
 
 
   fn: async function (inputs, exits) { 
-    // TODO: only return instances the user has access to 
-    let {api_key} = this.req.headers
-    let {user_id} = await Session.findOne({api_key})
-    let {instances} = await User.findOne({id:user_id}).populate('instances')
-    return exits.success(instances)
+
+    let can = await sails.helpers.can.with({req:this.req, resource:'instance', action:'read', user_id:inputs.user_id})
+    if(can){
+      let instances = await Instance.find({user_id})
+      return exits.success(instances)
+    }
+   return exits.fail('Permission denied')
   }
 
 };
