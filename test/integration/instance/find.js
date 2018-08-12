@@ -42,3 +42,26 @@ test.serial('/instances returns instances', async t => {
 
   t.deepEqual(res.body, [instance_1, instance_2])
 });
+
+
+
+
+test.serial('/instances fails for unauthorized user', async t => {
+  const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
+  const un_authorized_user = await sails.models.user.create({ username: 'n', encrypted_password: '123' }).fetch()
+  await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
+  await sails.models.session.create({ user_id: un_authorized_user.id, api_key: 'api_key_1234' })
+
+  const instance_1 = await sails.models.instance.create({ name: 'bwa'  }).fetch()
+  const instance_2 = await sails.models.instance.create({ name: 'nam' }).fetch()
+
+  console.log(user.id,instance_1.id)
+
+  await sails.helpers.addPermission.with({user_id:user.id, instance_id:instance_1.id, value:'user'})
+  await sails.helpers.addPermission.with({user_id:user.id, instance_id:instance_2.id, value:'read'})
+
+  const res = await supertest(sails.hooks.http.app)
+    .get(`/instances?user_id=${user.id}`)
+    .set('api_key', 'api_key_1234')
+  t.is(res.status, 401)
+});
