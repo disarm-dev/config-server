@@ -1,8 +1,11 @@
 module.exports = {
 
+
   friendlyName: 'Adds Permission to user',
 
+
   description: 'Assigns a Permission to a user',
+
 
   inputs: {
     user_id: {
@@ -19,6 +22,7 @@ module.exports = {
     }
   },
 
+
   exits: {
     fail: {
       responseType: 'unauthorised'
@@ -28,11 +32,9 @@ module.exports = {
     },
   },
 
-  fn: async function (inputs, exits) {
-    let { api_key } = this.req.headers
-    let { user_id } = await Session.findOne({ api_key })
 
-    const can = await sails.helpers.can.with({ user_id, action: 'update', resource:'permission', instance_id: inputs.instance_id, req: this.req })
+  fn: async function (inputs, exits) {
+    const can = await sails.helpers.can.with({ user_id: inputs.user_id, action: 'update', resource:'permission', instance_id: inputs.instance_id, req: this.req })
 
     if (can) {
       const permission = await sails.helpers.addPermission.with(inputs).intercept('fail', 'fail')

@@ -81,15 +81,15 @@ test.skip('Group permission granted', async t => { //Skipping this one since its
   const resource = 'instance'
   const action = 'read'
 
-  const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123', tag: 'super-admin' }).fetch()
+  const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   const nam_instance = await sails.models.instance.create({ name: 'Namibia' }).fetch()
-  await sails.helpers.addPermission.with({ user_id: user.id, value: 'admin', instance_id: nam_instance.id })
+  await sails.helpers.addPermission.with({ user_id: user.id, value: 'super-admin', instance_id: nam_instance.id })
 
   const fake_req = { headers: { api_key: 'key' } }
 
-  let authorized = await sails.helpers.can.with({ user_id: user.id, instance_id: nam_instance.id, value: 'write', req: fake_req })
+  let authorized = await sails.helpers.can.with({ user_id: user.id, instance_id: nam_instance.id, action: 'write',resource, req: fake_req })
 
-  t.true(authorized)
+  t.deepEqual(authorized,{})
 })
 
 test.todo('super-admin can edit users')

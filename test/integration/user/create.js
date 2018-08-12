@@ -40,7 +40,7 @@ test('invalid username returns error', async t => {
     .send({ username: '', password: 'malaria123' })
     .set('api_key', 'api_key_123')
 
-  t.is(res.status, 401)
+  t.is(res.status, 400)
 })
 
 test('invalid password returns error', async t => {

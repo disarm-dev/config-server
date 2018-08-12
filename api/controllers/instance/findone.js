@@ -28,20 +28,18 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     //Get needed parameters
-    let { api_key } = this.req.headers
-    let { user_id } = await Session.findOne({ api_key })
     let instance_id = inputs.id
 
     //Check for permissons
-    let can = await sails.helpers.can.with({ instance_id, action: 'read', req: this.req })
+    let can = await sails.helpers.can.with({instance_id, action: 'read', resource: 'instance', req: this.req})
 
     if (can) {
-      const instance = await Instance.findOne({ id: inputs.id })
-    return exits.success(instance)
+      const instance = await Instance.findOne({id: inputs.id})
+      return exits.success(instance)
     }
     return exits.fail('Permission denied')
     //Action
-    
+
   }
 
 };

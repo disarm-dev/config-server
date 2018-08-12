@@ -20,15 +20,5 @@ module.exports.policies = {
   '*': ['isLoggedIn'],
   'auth': {
     'login': true,
-  },
-  InstanceController:{
-    'create':'is-super-admin',
-    'update': 'is-super-admin',
-    'delete': 'is-super-admin'
-  },
-  UserController:{
-    'create': 'is-super-admin',
-    'find': 'is-super-admin',
-    'delete': 'is-super-admin'
   }
 };

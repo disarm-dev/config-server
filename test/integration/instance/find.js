@@ -29,13 +29,16 @@ test.serial('/instances returns instances', async t => {
 
   const instance_1 = await sails.models.instance.create({ name: 'bwa'  }).fetch()
   const instance_2 = await sails.models.instance.create({ name: 'nam' }).fetch()
-  await sails.helpers.addPermission.with({user_id:user.id, instance_id:instance_1.id, value:'read'})
-  //await sails.helpers.addPermission.with({user_id:user.id, instance_id:instance_2.id, value:'read'})
+
+  console.log(user.id,instance_1.id)
+
+  await sails.helpers.addPermission.with({user_id:user.id, instance_id:instance_1.id, value:'user'})
+  await sails.helpers.addPermission.with({user_id:user.id, instance_id:instance_2.id, value:'read'})
 
   const res = await supertest(sails.hooks.http.app)
-    .get('/instances')
+    .get(`/instances?user_id=${user.id}`)
     .set('api_key', 'api_key_123')
-
   t.is(res.status, 200)
+
   t.deepEqual(res.body, [instance_1, instance_2])
 });

@@ -28,24 +28,17 @@ module.exports = {
   },
 
   fn: async function (inputs, exits) {
-    //Get parameters
+
     const { username, password } = inputs;
 
-    let { api_key } = this.req.headers
-    let { user_id } = await Session.findOne({ api_key })
+    const can = await sails.helpers.can.with({action: 'create', resource:'user', req: this.req })
 
-    //Check paramenters
-    const can = await sails.helpers.can.with({value: 'create', resource:'user', req: this.req })
-
-    if (!can) {
-      return exits.un_authorised('Permission denied')
+    if (can) {
+      const encrypted_password = await sails.helpers.encryptPassword.with({ password }).intercept('fail', 'signup_fail')
+      await User.create({ username, encrypted_password })
+      return exits.success()
     }
 
-    //Action
-    const encrypted_password = await sails.helpers.encryptPassword.with({ password }).intercept('fail', 'signup_fail')
-
-    await User.create({ username, encrypted_password })
-
-    return exits.success()
+    return exits.un_authorised('Permission denied')
   }
 };
