@@ -21,7 +21,7 @@ module.exports.cors = {
   methods: 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
 
   // Which headers should be allowed for CORS requests?  This is only used
-  // in response to preflight requests.
-  headers: 'api-key,content-type'
+  // in response to preflight requests.s
+  headers: 'api_key,content-type'
 
 };
