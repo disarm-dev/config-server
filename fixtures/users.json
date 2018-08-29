@@ -1,0 +1,12 @@
+[
+    {
+        "username":"sm",
+        "password":"Malaria",
+        "role":"super-admin"
+    },
+    {
+        "username":"nd",
+        "password":"Malaria",
+        "role":"super-admin"
+    }
+]
