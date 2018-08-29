@@ -44,9 +44,11 @@ module.exports.bootstrap = async function (done) {
 
 
   const nam_instance = await create_instance(nam_instance_config.instance.title)
-  const nam_config = await create_config({version:'0.0.1', lob:nam_instance_config})
+  const nam_config = await create_config({lob:nam_instance_config})
   await Instance.addToCollection(nam_instance.id,'users',user_ids)
   await Instance.addToCollection(nam_instance.id, 'instanceconfigs',nam_config.id)
+  await create_geodata_layer({name:'constituencies', file:nam_villages, instance:nam_instance.id})
+  await create_geodata_layer({name:'villages', file:nam_villages, instance:nam_instance.id})
 
   user_ids.forEach(async user_id => {
     permissions.forEach(async value => {
@@ -56,9 +58,12 @@ module.exports.bootstrap = async function (done) {
   })
 
   const bwa_instance = await create_instance(bwa_instance_config.instance.title) 
-  const bwa_config = await create_config({version:'0.0.1', lob:bwa_instance_config})
+  const bwa_config = await create_config({lob:bwa_instance_config})
   await Instance.addToCollection(bwa_instance.id,'users',user_ids)
   await Instance.addToCollection(bwa_instance.id, 'instanceconfigs',bwa_config.id)
+  await create_geodata_layer({name:'clusters', file:bwa_clusters, instance:bwa_instance.id})
+  await create_geodata_layer({name:'villages', file:bwa_villages, instance:bwa_instance.id})
+  await create_geodata_layer({name:'districts', file:bwa_districrts, instance:bwa_instance.id})
 
   user_ids.forEach(user_id => {
     permissions.forEach(async value => {
@@ -67,7 +72,7 @@ module.exports.bootstrap = async function (done) {
   })
 
   const nw =  await Instance.find().populate('users')
-  console.log('Seting up pemrission',nw)
+  console.log('Seting up pemrission',bwa_config)
 
   return done()
 }
@@ -97,6 +102,6 @@ async function create_config({lob}){
 }
 
 
-async function create_geodata_layer({name,version,file}){
-  return await LargeFile.create({name,version,file}).fetch()
+async function create_geodata_layer({name,file,instance}){
+  return await LargeFile.create({name,version:1,file,instance}).fetch()
 }
