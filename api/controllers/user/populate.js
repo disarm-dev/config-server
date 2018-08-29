@@ -8,7 +8,12 @@ module.exports = {
 
 
   inputs: {
-
+    parentid:{
+      type:'number'
+    },
+    association:{
+      type:'string'
+    }
   },
 
 
@@ -23,22 +28,16 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    //Get needed parameters
-    let {api_key} = this.req.headers
-    let {user_id} = await Session.findOne({api_key})
 
-    let {id, association} = inputs
-    const super_admin_permission = await Permission.findOne({user_id,value:'super-admin'})
+    let {parentid} = inputs
+    const can = await sails.helpers.can.with({resource: 'user', action: 'read', req: this.req, user_id:parentid})
 
-    //Checking pemrissions
-    const can = (user_id === id)||super_admin_permission;
     if(!can){
       return exits.fail('Permission denied')
     }
 
-    //Action
-    //const user = await User.findOne({id}).populate(association)
-    return exits.success(this.req)
+    const user = await User.findOne({id:parentid}).populate('permissions')
+    return exits.success(user.permissions)
   }
 
 };
