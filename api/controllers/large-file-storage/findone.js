@@ -28,7 +28,8 @@ module.exports = {
     let { api_key } = this.req.headers
     let { user_id } = await Session.find({ api_key })
     let instance_id = inputs.id
-    if (!sails.helpers.can.with({ user_id, user_id, value: 'read', req: this.req })) {
+    const can = await sails.helpers.can.with({ user_id, user_id, value: 'read', req: this.req })
+    if (!can) {
       return exits.authorised_user('Permission denied')
     }
 
