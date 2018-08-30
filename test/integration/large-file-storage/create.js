@@ -29,6 +29,8 @@ test.serial('POST /largefiles returns 400 when name is missing', async t => {
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
 
+  await sails.helpers.addPermission.with({user_id: user.id,  value:'super-admin'})
+
   const res = await supertest(sails.hooks.http.app)
     .post('/largefiles')
     .field('version', 2)
@@ -43,6 +45,8 @@ test.serial('POST /largefiles returns 400 when version is missing', async t => {
   const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
+
+  await sails.helpers.addPermission.with({user_id: user.id,  value:'super-admin'})
 
   const res = await supertest(sails.hooks.http.app)
     .post('/largefiles')
@@ -59,6 +63,8 @@ test.serial('POST /largefiles returns 400 when instance_id is missing', async t 
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
 
+  await sails.helpers.addPermission.with({user_id: user.id,  value:'super-admin'})
+
   const res = await supertest(sails.hooks.http.app)
     .post('/largefiles')
     .field('name', 'name')
@@ -73,6 +79,8 @@ test.serial('POST /largefiles creates and returns a file reference', async t => 
   const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
   const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
   await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
+
+  await sails.helpers.addPermission.with({user_id: user.id,  value:'super-admin'})
 
   const res = await supertest(sails.hooks.http.app)
     .post('/largefiles')

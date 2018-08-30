@@ -114,18 +114,15 @@ module.exports = {
       const session = await Session.findOne({ api_key })
       const loged_in_user_id = _.get(session, 'user_id', null) //Should not be null
       if(!api_key) {
-        throw new Error('There ios no api_key')
+        throw new Error('There is no api_key')
       }
-
-      console.log(loged_in_user_id,user_id)
-
-
 
       const super_admin_permission = (await Permission.findOne({ user_id:loged_in_user_id, value: 'super-admin' }) !== undefined)
       const self_permission = (user_id === loged_in_user_id)
       const admin_permission = (await Permission.findOne({ user_id:loged_in_user_id, instance_id, value: 'admin' }) !== undefined)
       const user_instance_permission = (await Permission.findOne({ user_id:loged_in_user_id, instance_id, value: 'user' }) !== undefined)
 
+      //sails.log('Super admin permission', super_admin_permission)
       const can = (super_admin_permission && _.get(permissions, ['super_admin', resource, action])) ||
         (self_permission && _.get(permissions, ['user', resource, action])) ||
         (admin_permission && _.get(permissions, ['admin',resource, action],false))||
