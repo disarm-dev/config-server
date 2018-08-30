@@ -57,6 +57,8 @@ module.exports = {
 
     user.api_key = api_key
 
+    delete user.encrypted_password
+
     return exits.success(user)
   }
 };
