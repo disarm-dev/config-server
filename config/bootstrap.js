@@ -29,6 +29,8 @@ module.exports.bootstrap = async function (done) {
     const nam_constituencies = cjson.load('./fixtures/nam/constituencies.json')
     const nam_villages = cjson.load('./fixtures/nam/villages.json')
 
+    const min_instance_config = cjson.load('./fixtures/min/config.json')
+
     const user_ids = [];
 
     for (let i = 0; i < users_json.length; i++) {
@@ -54,6 +56,19 @@ module.exports.bootstrap = async function (done) {
 
       })
     })
+
+    const min_instance = await create_instance(min_instance_config.instance.title)
+    const min_config = await create_config({lob: min_instance_config})
+
+    await Instance.addToCollection(min_instance.id, 'users', user_ids)
+    await Instance.addToCollection(min_instance.id, 'instanceconfigs', min_config.id)
+
+    user_ids.forEach(async user_id => {
+      permissions.forEach(async value => {
+        await sails.helpers.addPermission.with({ user_id, value, instance_id: min_instance.id })
+      })
+    })
+
 
     const bwa_instance = await create_instance(bwa_instance_config.instance.title)
     const bwa_config = await create_config({ lob: bwa_instance_config })
