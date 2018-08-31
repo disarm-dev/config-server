@@ -35,7 +35,7 @@ module.exports.routes = {
   
   'GET /instances': 'instance.find',
   'GET /instances/:id': 'instance.findone',
-  'GET /instances/:id/published_instanceconfigs': 'instance-config.find',
+  'GET /instances/:id/published_instanceconfigs': 'instance.populate',
   'POST /instances': 'instance.create',
   
   'GET /instanceconfigs/:id': 'instance-config.findone',
