@@ -24,10 +24,19 @@ module.exports = {
   },
 
   fn: async function (inputs, exits) {
+
+    let { api_key } = this.req.headers
+    let { user_id } = await Session.find({ api_key })
+    let instance_id = inputs.id
+    let can = await sails.helpers.can.with({ req: this.req, resource: 'instance-config', action: 'read' })
+    if (!can) {
+      return exits.authorised_user('Permission denied')
+    }
+
     const id = this.req.param('id')
-    const file = await LargeFile.findOne({id})
-    
-    
+    const file = await LargeFile.findOne({ id })
+
+
     var fileAdapter = SkipperDisk(/* optional opts */);
 
     // set the filename to the same file as the user uploaded

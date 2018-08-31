@@ -1,5 +1,5 @@
 module.exports = {
-  
+
   friendlyName: 'Logout Actions',
 
 
@@ -17,10 +17,10 @@ module.exports = {
 
   exits: {
     not_authorised_user: {
-      responseType:'unauthorised'
+      responseType: 'unauthorised'
     },
     authorised_user: {
-      responseType:'ok'
+      responseType: 'ok'
     },
   },
 
@@ -29,8 +29,21 @@ module.exports = {
     // TODO: Ensure user has permissions to the instance_configs 
     // TODO: should probably filter where {published: true}
     // TODO: Only return titles or a preview, not entire configs
-    const instanceConfigs = await InstanceConfig.find({instance: inputs.id})
-    return exits.authorised_user(instanceConfigs)
+    //Get needed parameters
+    let { api_key } = this.req.headers
+    let { user_id } = await Session.findOne({ api_key })
+    let instance_id = inputs.id
+
+    //Check permissions
+    let can = await sails.helpers.can.with({instance_id, action: 'read',resource:'instance-config', req: this.req })
+
+    if (can) {
+      const instanceConfigs = await InstanceConfig.find({ instance: inputs.id })
+      return exits.authorised_user(instanceConfigs)
+    }
+
+    return exits.not_authorised_user('Permission denied')
+    //Action
   }
 
 };

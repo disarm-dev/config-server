@@ -30,6 +30,8 @@ test.serial('GET /largefiles/:id returns a file', async t => {
 
   const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
 
+  await sails.helpers.addPermission.with({user_id: user.id,  value:'super-admin'})
+
   const upload_res = await supertest(sails.hooks.http.app)
     .post('/largefiles')
     .field('name', 'test_file')

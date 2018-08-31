@@ -1,0 +1,14 @@
+{
+    "_id": "min",
+    "config_id": "min",
+    "config_version": "1.0.3",
+    "applets": {
+        "view": {},
+        "meta": {}
+    },
+    "instance": {
+        "title": "Minimum Douma Instance",
+        "location_name": "Anywhere",
+        "slug": "min"
+    }
+}

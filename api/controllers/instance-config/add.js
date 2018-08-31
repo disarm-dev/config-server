@@ -8,78 +8,48 @@ module.exports = {
 
 
   inputs: {
-    applets: {
-      type: 'ref',
-      required:false
+    version: {
+      type: 'string'
     },
-    aggregations:{
-      type:'ref',
-      required:false
+    name: {
+      type: 'string'
     },
-    decorators:{
-      type:'ref',
-      required:false
+    lob: {
+      type: 'ref'
     },
-    fake_form:{
-      type:'ref',
-      required: false
-    },
-    form:{
-      type:'ref',
-      required:false
-    },
-    instance:{
-      type:'ref',
-      required:true
-    },
-    map_focus:{
-      type:'ref',
-      required:false
-    },
-    presenters:{
-      type:'ref',
-      required:false
-    },
-    spatial_hierarchy:{
-      type:'ref',
-      required:false
-    },
-    validations:{
-      type:'ref',
-      required:false
-    },
-    location_selection:{
-      type:'ref',
-      required:false
+    instance: {
+      type: 'number'
     }
   },
 
 
   exits: {
     not_authorised_user: {
-      responseType:'unauthorised'
+      responseType: 'unauthorised'
     },
     authorised_user: {
-      responseType:'ok'
+      responseType: 'ok'
     },
   },
 
 
   fn: async function (inputs, exits) {
+    //Get needed 
     const {
-      applets,
-      aggregations,
-      decorators,
-      fake_form,
-      form,
-      instance,
-      map_focus,
-      presenters,
-      spatial_hierarchy,
-      validations,
-      location_selection
+      version,
+      name,
+      lob,
+      instance
     } = inputs
-    sails.log.info('Create Config',instance)
+    let { api_key } = this.req.headers
+    let { user_id } = await Session.find({ api_key })
+    let instance_id = inputs.id
+
+    if (!sails.helpers.can.with({ user_id, user_id, value: 'read', req: this.req })) {
+      return exits.authorised_user('Permission denied')
+    }
+
+    //Action
     return exits.authorised_user(inputs)
   }
 

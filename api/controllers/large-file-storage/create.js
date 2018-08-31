@@ -35,8 +35,16 @@ module.exports = {
   },
 
 
-  fn: function (inputs, exits) {
+  fn: async function (inputs, exits) {
+
     
+    let can = await sails.helpers.can.with({ req: this.req, resource: 'instance-config', action: 'create' })
+
+    if (!can) {
+      return exits.fail('Permission denied')
+    }
+
+
     this.req.file('large_file').upload({}, async (err, files) => {
       if (err) {
         return exits.fail(err)
@@ -52,8 +60,9 @@ module.exports = {
         version: inputs.version,
         instance: inputs.instance_id
       }).fetch()
-  
+
       return exits.success(file)
     })
   }
 };
+

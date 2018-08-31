@@ -42,3 +42,23 @@ test.serial('/users/:id/permissions returns users permissions when logged in', a
   t.is(res.status, 200)
   t.deepEqual(res.body, updatedUser.permissions)
 });
+
+test.serial('put /permissions adds a permission as super-admin to admin user', async t => {
+  const admin_user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
+  
+  const super_admin_user = await sails.models.user.create({ username: 'super', encrypted_password: '123' }).fetch()
+  await sails.models.session.create({ user_id: super_admin_user.id, api_key: 'api_key_123' })
+
+  await sails.helpers.addPermission.with({user_id:super_admin_user.id , value:'super-admin'})
+
+  const instance = await sails.models.instance.create({ name: 'bwa'  }).fetch()
+
+  const res = await supertest(sails.hooks.http.app)
+    .post(`/permission`)
+    .send({ user_id: admin_user.id, instance_id: instance.id, value:'admin'})
+   .set('api_key', 'api_key_123')
+
+  t.is(res.status, 200)
+  t.deepEqual(res.body[0].value, 'admin')
+});
+

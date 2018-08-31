@@ -17,18 +17,26 @@ module.exports = {
 
   exits: {
     fail: {
-      responseType:'unauthorised'
+      responseType: 'unauthorised'
     },
     success: {
-      responseType:'ok'
+      responseType: 'ok'
     },
   },
 
 
   fn: async function (inputs, exits) {
-    const instance = await Instance.create({name: inputs.name}).fetch()
-   
-    return exits.success(instance)
+    let instance_id = inputs.id
+
+    let can = await sails.helpers.can.with({ req: this.req, resource: 'instance', action: 'create' })
+    
+    if (can) {
+      const instance = await Instance.create({ name: inputs.name }).fetch()
+      return exits.success(instance)
+    }
+
+
+    return exits.fail('Permission denied')
   }
 
 };
