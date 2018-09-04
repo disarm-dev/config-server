@@ -36,7 +36,7 @@ module.exports = {
     const user = await User.findOne({username})
 
     if (!user) {
-      return exits.login_fail('Invalid username or password')
+      return exits.login_fail()
     }
     
     await sails
