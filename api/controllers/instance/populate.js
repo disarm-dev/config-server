@@ -40,9 +40,12 @@ module.exports = {
       if (can) {
         const instanceConfigs = await InstanceConfig.find(
             {
-                where:{ instance: inputs.id },
-                select:['version','application_version']
+                where:{ instance: inputs.id }
             })
+        instanceConfigs.forEach(element => {
+          delete element.lob
+        });
+        
         return exits.authorised_user(instanceConfigs)
       }
   
