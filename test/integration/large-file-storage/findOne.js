@@ -50,3 +50,30 @@ test.serial('GET /largefiles/:id returns a file', async t => {
   // TODO: figure out how to actually test the file is being returned correctly.
   t.is(res.status, 200)
 });
+
+test.serial('GET /largefiles returns a file by pasisng name and instance', async t => {
+  const user = await sails.models.user.create({ username: 'nd', encrypted_password: '123' }).fetch()
+  await sails.models.session.create({ user_id: user.id, api_key: 'api_key_123' })
+
+  const instance = await sails.models.instance.create({ name: 'test_instance' }).fetch()
+
+  await sails.helpers.addPermission.with({user_id: user.id,  value:'super-admin'})
+
+  const upload_res = await supertest(sails.hooks.http.app)
+    .post(`/largefiles?instance=${instance.id}&name=test_instance`)
+    .field('name', 'test_file')
+    .field('version', 2)
+    .field('instance_id', instance.id)
+    .attach('large_file', 'test/fixtures/test.geojson')
+    .set('api_key', 'api_key_123')
+
+  t.is(upload_res.status, 200)
+  // t.is(upload_res.body.id, true)
+
+  const res = await supertest(sails.hooks.http.app)
+    .get(`/largefiles/${upload_res.body.id}`)
+    .set('api_key', 'api_key_123')
+
+  // TODO: figure out how to actually test the file is being returned correctly.
+  t.is(res.status, 200)
+});
