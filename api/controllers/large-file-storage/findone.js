@@ -58,7 +58,6 @@ module.exports = {
       // set the filename to the same file as the user uploaded
       this.res.set("Content-disposition", "attachment; filename='" + file.name + "'");
   
-      delete file.file
   
       return exits.success(file)
     }catch(e){
