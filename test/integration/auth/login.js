@@ -27,7 +27,7 @@ test('can login with correct user and password', async t => {
       username,
       password
     })
-  
+
   t.is(res.status, 200)
   t.is(res.body.username, 'nd')
   t.true(res.body.api_key.length > 0)
@@ -46,5 +46,42 @@ test('returns 401 for incorrect username or password', async t => {
       password: 'incorrect_password'
     })
 
-  t.is(res.status, 401) 
+  t.is(res.status, 401)
+})
+
+
+test('Login twice and use each session', async t => {
+  const username = 'nd'
+  const password = 'malaria123'
+  const encrypted_password = await sails.helpers.encryptPassword.with({ password })
+  const user = await User.create({ username, encrypted_password }).fetch()
+
+  const first_login = await supertest(sails.hooks.http.app)
+    .post(`/auth/login`)
+    .send({
+      username,
+      password
+    })
+
+  const second_login = await supertest(sails.hooks.http.app)
+    .post(`/auth/login`)
+    .send({
+      username,
+      password
+    })
+
+  //Then make requests using each of the api_keys from the logins
+
+  const first_request = await supertest(sails.hooks.http.app)
+  .get(`/users/${user.id}/permissions`)
+  .set('api_key', first_login.body.api_key)
+
+
+  const second_request = await supertest(sails.hooks.http.app)
+  .get(`/users/${user.id}/permissions`)
+  .set('api_key', second_login.body.api_key)
+
+  t.is(first_request.status, 200)
+  t.is(second_request.status, 200)
+  t.is(first_login.body.api_key,second_login.body.api_key)
 })

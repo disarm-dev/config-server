@@ -47,15 +47,15 @@ module.exports = {
 
     const api_key = uuid()
     
-    const found_session = await Session.findOne({user_id: user.id})
+    let found_session = await Session.findOne({user_id: user.id})
     
-    if (found_session) {
-      await Session.update({ id: found_session.id }, {api_key})
-    } else {
-      await Session.create({ user_id: user.id, api_key })
+    if (!found_session) {
+      found_session = await Session.create({ user_id: user.id, api_key }).fetch()
     }
 
-    user.api_key = api_key
+    console.log(found_session)
+
+    user.api_key = found_session.api_key
 
     delete user.encrypted_password
 
