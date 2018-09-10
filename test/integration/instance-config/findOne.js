@@ -48,3 +48,5 @@ test.serial('/instanceconfigs/:id returns the instance_config when logged in as 
   t.is(res.status, 200)
   t.deepEqual(res.body, instance_config)
 });
+
+

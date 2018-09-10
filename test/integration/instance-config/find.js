@@ -47,9 +47,12 @@ test.serial('/instances/:id/published_instanceconfigs returns 200 when logged in
   const res = await supertest(sails.hooks.http.app)
     .get(`/instances/${instance.id}/published_instanceconfigs?user_id=${user.id}`)
     .set('api_key', 'api_key_123')
+
+    delete instance_config_1.lob
+    delete instance_config_2.lob
+    t.is(res.status, 200)
     t.deepEqual(res.body, [instance_config_1, instance_config_2])
-  t.is(res.status, 200)
-  
+
 });
 
 

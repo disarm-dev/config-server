@@ -59,6 +59,6 @@ test.serial('put /permissions adds a permission as super-admin to admin user', a
    .set('api_key', 'api_key_123')
 
   t.is(res.status, 200)
-  t.deepEqual(res.body[0].value, 'admin')
+  t.deepEqual(res.body.value, 'admin')
 });
 
