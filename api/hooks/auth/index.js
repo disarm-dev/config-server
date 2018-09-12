@@ -4,6 +4,8 @@ module.exports = function auth(sails) {
     name:'Auth Hook', 
     initialize: function(cb) {
         //Initialise source of permissions
+        console.log(sails)
+        debugger
         return cb();
     },
     routes: {
